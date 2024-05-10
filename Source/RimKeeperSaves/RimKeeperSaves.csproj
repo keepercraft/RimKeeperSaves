@@ -6,23 +6,24 @@
     <BaseOutputPath>bin</BaseOutputPath>
     <AssemblyName>Keepercraft.RimKeeperSaves</AssemblyName>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Copyright>MIT</Copyright>
+    <Copyright>Copyright © 2024 Keepercraft</Copyright>
     <Authors>Keepercraft</Authors>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
+	<FileVersion>1.0.1</FileVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
     <Title>RimKeeperSave</Title>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+	<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <IncludeSymbols>False</IncludeSymbols>
-    <FileVersion>1.0.0</FileVersion>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
