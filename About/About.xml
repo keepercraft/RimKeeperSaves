@@ -21,5 +21,5 @@
 	<incompatibleWith>
 		<li>majorhoff.rimthreaded</li> <!-- bad threading -->
 	</incompatibleWith>
-	<description>RimKeeperSaves mod</description>
+	<description>RimKeeperSaves mod is for compress game saves.</description>
 </ModMetaData>
