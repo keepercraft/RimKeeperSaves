@@ -100,29 +100,6 @@ namespace Keepercraft.RimKeeperSaves
                         xmlDocument.Load(reader.XmlReader);
                         scribeloader.curXmlParent = xmlDocument.DocumentElement;
                     }
-                    //using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                    //{
-                    //    StreamReader reader = new StreamReader(stream);
-                    //    char[] buffer = new char[5];
-                    //    reader.Read(buffer, 0, 5);
-                    //    string startOfFile = new string(buffer);
-                    //    if (startOfFile.Equals("<?xml"))
-                    //    {
-                    //        reader.Dispose();
-                    //        return true;
-                    //    }
-                    //    stream.Position = 0;
-
-                    //    using (GZipStream zip = new GZipStream(stream, CompressionMode.Decompress))
-                    //    {
-                    //        using (XmlTextReader xmlTextReader = new XmlTextReader(zip))
-                    //        {
-                    //            XmlDocument xmlDocument = new XmlDocument();
-                    //            xmlDocument.Load(xmlTextReader);
-                    //            scribeloader.curXmlParent = xmlDocument.DocumentElement;
-                    //        }
-                    //    }
-                    //}
                     Scribe.mode = LoadSaveMode.LoadingVars;
                 }
                 catch (Exception ex)
@@ -170,38 +147,6 @@ namespace Keepercraft.RimKeeperSaves
                             }
                         }
                     }
-                    //using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                    //{
-                    //    StreamReader reader = new StreamReader(stream);
-                    //    char[] buffer = new char[5];
-                    //    reader.Read(buffer, 0, 5);
-                    //    string startOfFile = new string(buffer);
-                    //    if (startOfFile.Equals("<?xml"))
-                    //    {
-                    //        Scribe.mode = LoadSaveMode.LoadingVars;
-                    //        reader.Dispose();
-                    //        return true;
-                    //    }
-                    //    stream.Position = 0;
-
-                    //    using (GZipStream zip = new GZipStream(stream, CompressionMode.Decompress))
-                    //    {
-                    //        using (XmlTextReader xmlTextReader = new XmlTextReader(zip))
-                    //        {
-                    //            if (ScribeMetaHeaderUtility.ReadToMetaElement(xmlTextReader))
-                    //            {
-                    //                using (XmlReader xmlReader = xmlTextReader.ReadSubtree())
-                    //                {
-                    //                    XmlDocument xmlDocument = new XmlDocument();
-                    //                    xmlDocument.Load(xmlReader);
-                    //                    XmlElement xmlElement = xmlDocument.CreateElement("root");
-                    //                    xmlElement.AppendChild(xmlDocument.DocumentElement);
-                    //                    scribeloader.curXmlParent = xmlElement;
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
                     Scribe.mode = LoadSaveMode.LoadingVars;
                 }
                 catch (Exception ex)
@@ -241,34 +186,6 @@ namespace Keepercraft.RimKeeperSaves
                             return false;
                         }
                     }
-                    //using (FileStream stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
-                    //{
-                    //    StreamReader reader = new StreamReader(stream);
-                    //    char[] buffer = new char[5];
-                    //    reader.Read(buffer, 0, 5);
-                    //    string startOfFile = new string(buffer);
-                    //    if (startOfFile.Equals("<?xml"))
-                    //    {
-                    //        reader.Dispose();
-                    //        __result = null;
-                    //        return true;
-                    //    }
-                    //    stream.Position = 0;
-
-                    //    using (GZipStream zip = new GZipStream(stream, CompressionMode.Decompress))
-                    //    {
-                    //        using (XmlTextReader xmlTextReader = new XmlTextReader(zip))
-                    //        {
-                    //            if (ScribeMetaHeaderUtility.ReadToMetaElement(xmlTextReader) && xmlTextReader.ReadToDescendant("gameVersion"))
-                    //            {
-                    //                __result = VersionControl.VersionStringWithoutRev(xmlTextReader.ReadString());
-                    //                Log.Message(string.Format("RimKeeperSaves GameVersionOf Path:{0} : {1}", file.Name, __result));
-                    //            }
-                    //        }
-                    //    }
-
-                    //    reader.Dispose();
-                    //}
                 }
                 catch (Exception ex)
                 {
