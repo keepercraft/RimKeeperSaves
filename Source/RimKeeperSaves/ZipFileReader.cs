@@ -37,6 +37,10 @@ namespace Keepercraft.RimKeeperSaves
             readerStream?.Dispose();
             zipStream?.Dispose();
             fileStream?.Dispose();
+            XmlReader = null;
+            readerStream = null;
+            zipStream = null;
+            fileStream = null;
         }
 
         public static bool IsFileXML(string path)

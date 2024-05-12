@@ -22,7 +22,7 @@ namespace Keepercraft.RimKeeperSaves
         public override void Close()
         {
             base.Close();
-            fileStream.Close();
+            fileStream.Dispose();
             fileStream = null;
         }
     }

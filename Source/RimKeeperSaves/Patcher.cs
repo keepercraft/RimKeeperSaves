@@ -19,11 +19,15 @@ namespace Keepercraft.RimKeeperSaves
             harmony.PatchAll();
         }
 
+        static string pathSaves = Path.Combine(GenFilePaths.SaveDataFolderPath,"Saves");
+
         [HarmonyPatch(typeof(ScribeSaver), "InitSaving")]
         public static class InitSaving_Patch
         {
             static bool Prefix(string filePath, string documentElementName)
             {
+                if (!filePath.IsSaveFile()) return true;
+
                 ScribeSaver scribeSaver = Scribe.saver;
 
                 if (Scribe.mode != LoadSaveMode.Inactive)
@@ -41,7 +45,6 @@ namespace Keepercraft.RimKeeperSaves
                 try
                 {
                     //Log.Message(string.Format("RimKeeperSaves InitSaving_Patch Path:{0}", filePath));
-
                     Scribe.mode = LoadSaveMode.Saving;
                     var saveStream = ZipFileStream.Factor(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
                     scribeSaver.SetPrivateField("saveStream", saveStream);
@@ -74,6 +77,7 @@ namespace Keepercraft.RimKeeperSaves
         {
             static bool Prefix(string filePath)
             {
+                if (!filePath.IsSaveFile()) return true;
                 ScribeLoader scribeloader = Scribe.loader;
                 //Log.Message(string.Format("RimKeeperSaves InitLoading_Patch Path:{0}", filePath));
 
@@ -123,6 +127,7 @@ namespace Keepercraft.RimKeeperSaves
         {
             static bool Prefix(string filePath)
             {
+                if (!filePath.IsSaveFile()) return true;
                 ScribeLoader scribeloader = Scribe.loader;
                 //Log.Message(string.Format("RimKeeperSaves InitLoadingMetaHeaderOnly Path:{0}", filePath));
                 
