@@ -6,6 +6,10 @@ using Keepercraft.RimKeeperSaves.Extensions;
 using Verse;
 using RimWorld;
 using HarmonyLib;
+using Keepercraft.RimKeeperSaves.Helpers;
+using System.Linq;
+using System.Reflection;
+using Keepercraft.RimKeeperSaves.Models;
 
 namespace Keepercraft.RimKeeperSaves
 {
@@ -14,9 +18,10 @@ namespace Keepercraft.RimKeeperSaves
     {
         static Patcher()
         {
-            Log.Message("RimKeeperSaves Patching");
-            var harmony = new Harmony("Keepercraft.RimKeeperSaves");
-            harmony.PatchAll();
+            string namespaceName = MethodBase.GetCurrentMethod().DeclaringType.Namespace;
+            DebugHelper.SetHeader(namespaceName.Split('.').LastOrDefault());
+            DebugHelper.Message("Patching");
+            new Harmony(namespaceName).PatchAll();
         }
 
         static string pathSaves = Path.Combine(GenFilePaths.SaveDataFolderPath,"Saves");
@@ -26,6 +31,7 @@ namespace Keepercraft.RimKeeperSaves
         {
             static bool Prefix(string filePath, string documentElementName)
             {
+                if (!RimKeeperSavesModSettings.SaveCompressionActive) return true;
                 if (!filePath.IsSaveFile()) return true;
 
                 ScribeSaver scribeSaver = Scribe.saver;

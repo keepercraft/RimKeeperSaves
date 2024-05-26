@@ -1,6 +1,4 @@
-﻿using RimWorld.BaseGen;
-using System;
-using System.IO;
+﻿using System;
 using System.Reflection;
 using Verse;
 
@@ -37,11 +35,6 @@ namespace Keepercraft.RimKeeperSaves.Extensions
                 Log.Error("[RimKeeperSaves] SetPrivateField:" + fieldName);
                 return default;
             }
-        }
-
-        public static bool IsSaveFile(this string path)
-        {
-            return path.EndsWith(".rws");
         }
     }
 }

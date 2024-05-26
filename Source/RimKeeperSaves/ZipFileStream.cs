@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Keepercraft.RimKeeperSaves.Helpers;
+using System.IO;
 using System.IO.Compression;
 
 namespace Keepercraft.RimKeeperSaves
@@ -9,6 +10,7 @@ namespace Keepercraft.RimKeeperSaves
 
         public static ZipFileStream Factor(string path, FileMode mode, FileAccess access, FileShare shere)
         {
+            DebugHelper.Message("ZipFileStream path:{0}", path);
             FileStream stream = new FileStream(path, mode, access, shere);
             return new ZipFileStream(stream, CompressionLevel.Optimal);
         }
@@ -16,7 +18,6 @@ namespace Keepercraft.RimKeeperSaves
         public ZipFileStream(FileStream fileStream, CompressionLevel lvl) : base(fileStream, lvl)
         {
             this.fileStream = fileStream;
-            //Log.Message("ZipFileStream Create Stream");
         }
 
         public override void Close()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Keepercraft.RimKeeperSaves.Helpers;
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Xml;
@@ -18,13 +19,13 @@ namespace Keepercraft.RimKeeperSaves
             fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
             if (isxml)
             {
-                //Log.Message(string.Format("ZipFileReader StreamReader"));
+                DebugHelper.Message(string.Format("ZipFileReader StreamReader path:{0}", path));
                 readerStream = new StreamReader(fileStream);
                 XmlReader = new XmlTextReader(readerStream);
             }
             else
             {
-                //Log.Message(string.Format("ZipFileReader GZipStream"));
+                DebugHelper.Message(string.Format("ZipFileReader GZipStream path:{0}", path));
                 zipStream = new GZipStream(fileStream, CompressionMode.Decompress);
                 XmlReader = new XmlTextReader(zipStream);
             }
@@ -54,5 +55,4 @@ namespace Keepercraft.RimKeeperSaves
             }
         }
     }
-
 }
