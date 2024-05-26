@@ -8,9 +8,9 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Copyright>Copyright © 2024 Keepercraft</Copyright>
     <Authors>Keepercraft</Authors>
-    <Version>1.0.3</Version>
-	<FileVersion>1.0.3</FileVersion>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <Version>1.0.4</Version>
+	<FileVersion>1.0.4</FileVersion>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
     <Title>RimKeeperSave</Title>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 	<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>

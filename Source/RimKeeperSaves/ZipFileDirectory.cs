@@ -95,6 +95,11 @@ namespace Keepercraft.RimKeeperSaves
                             var item = files[i];
 
                             bool iszip = ZipFileReader.IsFileXML(item);
+                            var fileinfo = new FileInfo(item);
+                            DateTime timeCreate = fileinfo?.CreationTime ?? DateTime.Now;
+                            DateTime timeLastWrite = fileinfo?.LastWriteTime ?? DateTime.Now;
+                            DateTime timeLastAccess = fileinfo?.LastAccessTime ?? DateTime.Now;
+
 
                             if (!iszip && mode == CompressionMode.Decompress)
                             {
@@ -121,22 +126,33 @@ namespace Keepercraft.RimKeeperSaves
                             {
                                 DebugHelper.Message("File:" + item);
                                 gamesaveActualfile = item;
-                                using (var fileStream = new FileStream(item, FileMode.Open, FileAccess.ReadWrite))
+                                using (MemoryStream compressedStream = new MemoryStream())
                                 {
-                                    gamesaveFolderSize += fileStream.Length;
-                                    using (MemoryStream compressedStream = new MemoryStream())
+                                    using (FileStream originalFileStream = new FileStream(item, FileMode.Open, FileAccess.Read))
                                     {
-                                        using (var zipStream = new GZipStream(compressedStream, CompressionMode.Compress))
+                                        gamesaveFolderSize += originalFileStream.Length;
+                                        using (GZipStream compressionStream = new GZipStream(compressedStream, CompressionMode.Compress, true))
                                         {
-                                            fileStream.CopyTo(zipStream);
-                                            fileStream.Seek(0, SeekOrigin.Begin);
-                                            compressedStream.WriteTo(fileStream);
-                                            fileStream.SetLength(fileStream.Position);
-                                            gamesaveFolderSizeNew += fileStream.Length;
+                                            originalFileStream.CopyTo(compressionStream);
                                         }
+                                    }
+                                    using (FileStream targetFileStream = new FileStream(item, FileMode.Create, FileAccess.Write))
+                                    {
+                                        targetFileStream.SetLength(0);
+                                        compressedStream.Seek(0, SeekOrigin.Begin);
+                                        compressedStream.CopyTo(targetFileStream);
+                                        gamesaveFolderSizeNew += compressedStream.Length;
                                     }
                                 }
                                 gamesaveFolderCountNew++;
+                            }
+
+                            fileinfo = new FileInfo(item);
+                            if(fileinfo != null)
+                            {
+                                fileinfo.CreationTime = timeCreate;
+                                fileinfo.LastWriteTime = timeLastWrite;
+                                fileinfo.LastAccessTime = timeLastAccess;
                             }
 
                             progress = (float)i / (float)gamesaveFolderCount;
