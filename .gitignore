@@ -1,10 +1,57 @@
-# Ignore all files in the build output directory
+# ⚙️ .NET build artifacts
 bin/
 obj/
+
+# ⚙️ VS Code / Rider / Visual Studio settings
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# 🔧 Debug i test pliki
+*.log
+#*.pdb
+*.tmp
+*.bak
+*.orig
+
+# 📦 NuGet i lokalne paczki
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+project.assets.json
+
+# 🔄 ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# 🧪 Test results
+TestResults/
+
+# 💬 Kompilowane zasoby
+#*.dll
+#*.exe
+
+# 🧩 Rider i inne IDE
+*.csproj.user
+
+# 📁 MonoDevelop
+*.pidb
+
+# 🔄 VS global cache
 .vs/
 
-*.suo
-*.pdb
-*.log
-*.lib
-*.pdb
+# 📁 RimWorld
+RimWorldWin64_Data/
+RimWorldWin_Data/
+*.modprefs
+
+# 📁 Steam Uploader cache
+UploadConfigs/
+steam_appid.txt
+
+# 💡 Lok
