@@ -1,13 +1,7 @@
 ﻿using Keepercraft.RimKeeperSaves.Extensions;
+using Keepercraft.RimKeeperSaves.Helpers;
 using Keepercraft.RimKeeperSaves.Models;
-using System;
-using System.Diagnostics;
-using System.IO;
 using System.IO.Compression;
-using System.IO.Pipes;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
@@ -16,6 +10,8 @@ namespace Keepercraft.RimKeeperSaves
     public class RimKeeperFilterHelperMod : Mod
     {
         private ZipFileDirectory zipper;
+
+        public string GZipSteamTestCache = "*";
 
         public RimKeeperFilterHelperMod(ModContentPack content) : base(content)
         {
@@ -30,11 +26,19 @@ namespace Keepercraft.RimKeeperSaves
             base.WriteSettings();
         }
 
+        public void Init() => GZipSteamTestCache = ZipFileTest.GZipSteamTest()
+                ? "Compresion lib work ok"
+                : "!! Compresion lib don't work !!";
+
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            RimKeeperSavesModSettings.DoWindowContents(() => Init());
             Listing_Standard listingStandard = new Listing_Standard();
             Rect newRect = new Rect(inRect.x, inRect.y, inRect.width / 2, inRect.height);
             listingStandard.Begin(newRect);
+
+            listingStandard.Label(GZipSteamTestCache);
+            listingStandard.Gap();
 
             listingStandard.CheckboxLabeled("Debug Log", ref RimKeeperSavesModSettings.DebugLog, "Log messages");
             listingStandard.Gap();

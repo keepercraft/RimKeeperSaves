@@ -3,41 +3,73 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
-    <BaseOutputPath>bin</BaseOutputPath>
     <AssemblyName>Keepercraft.RimKeeperSaves</AssemblyName>
+	<AssemblyTitle>RimKeeperSaves</AssemblyTitle>
+	<AssemblyVersion>$(Version)</AssemblyVersion>
+	<AssemblyProduct>$(AssemblyName)</AssemblyProduct>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Copyright>Copyright © 2024 Keepercraft</Copyright>
     <Authors>Keepercraft</Authors>
-    <Version>1.1.0</Version>
-    <Title>RimKeeperSave</Title>
+    <Version>$(Configuration).1.2</Version>
+	<AssemblyVersion>$(Version)</AssemblyVersion>
+	<FileVersion>$(Version)</FileVersion>
+    <Title>$(AssemblyName)</Title>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 	<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
-    <IncludeSymbols>False</IncludeSymbols>
-	<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <IncludeSymbols>True</IncludeSymbols>
+	<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	<Platforms>x64</Platforms>
+	<Configurations>1.6;1.5</Configurations>
   </PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Platform)'=='x64'">
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<BaseOutputPath />
+		<OutputPath>..\..\$(Configuration)\Assemblies</OutputPath>
+		<ModCopyDir>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(AssemblyTitle)\</ModCopyDir>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-  </PropertyGroup>
+	<Target Name="RemoveHarmonyDll" AfterTargets="Build" Condition="'$(Platform)'=='x64'">
+		<Delete Files="$(OutputPath)0Harmony.dll" ContinueOnError="true" />
+		
+		<ItemGroup>
+			<SFiles Include="
+					..\..\README.md;				  
+					..\..\LICENSE" />
+		</ItemGroup>
+		<Copy SourceFiles="@(SFiles)" DestinationFolder="$(ModCopyDir)\%(RecursiveDir)" />
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-  </PropertyGroup>
+		<ItemGroup>
+			<DllFiles Include="$(OutputPath)**\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(DllFiles)" DestinationFolder="$(ModCopyDir)\$(Configuration)\Assemblies\%(DllFiles.RecursiveDir)" />
 
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+		<ItemGroup>
+			<AboutFiles Include="..\..\About\**\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(AboutFiles)" DestinationFolder="$(ModCopyDir)\About\%(AboutFiles.RecursiveDir)" />
+	</Target>
 
-  <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.3.3">
+    <ItemGroup>
+        <None Include="..\..\LICENSE">
+          <Pack>True</Pack>
+          <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == '1.5'">
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4085" />
+		<PackageReference Include="Lib.Harmony" Version="2.3.3">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+	
+  <ItemGroup Condition="'$(Configuration)' == '1.6'">
+	<PackageReference Include="Lib.Harmony" Version="2.3.6">
+		<Private>False</Private>
       <PrivateAssets>all</PrivateAssets>
+      <GeneratePathProperty>False</GeneratePathProperty>
     </PackageReference>
-  </ItemGroup>
-  
-   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
 	  <Private>False</Private>

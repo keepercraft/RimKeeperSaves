@@ -22,5 +22,26 @@
 	<incompatibleWith>
 		<li>majorhoff.rimthreaded</li> <!-- bad threading -->
 	</incompatibleWith>
-	<description>RimKeeperSaves mod is for compress game saves.</description>
+	<description>
+This mod compress your save games in more efficient way. XML game data is compressed in memory to the GZip format, allowing for duration and hard drive space. It does not modify save files, it only compresses them.
+
+You can manually unzip your saved games at any time using 7-Zip.
+
+Update mod with:
+- enable/disable automatic compress new savegame;
+- compress/decompress all saves.
+
+This mod is similar to [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2032036337]Savegame Compressor[/url]
+
+Requirements for compresion lib:
+[b]Windows 7[/b]:		.NET Framework 4.5 / Core 3.1	
+[b]Windows 10+[/b]:		.NET 5/6/7/8	
+[b]Ubuntu/Debian[/b]:	.NET 5+					[b]zlib1g, libicu[/b]
+[b]Arch Linux[/b]:		.NET 6+ /Mono 6.12+		[b]zlib, icu, mono[/b]
+[b]Steam Deck[/b]:		 Mono + Proton	
+
+Source Code: [url=https://github.com/keepercraft/RimKeeperSaves]Github[/url]
+[url=https://ko-fi.com/keepercraft][img]https://storage.ko-fi.com/cdn/kofi5.png?v=3[/img][/url]
+
+	</description>
 </ModMetaData>

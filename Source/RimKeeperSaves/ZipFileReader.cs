@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Xml;
+using Verse;
 
 namespace Keepercraft.RimKeeperSaves
 {
@@ -17,18 +18,24 @@ namespace Keepercraft.RimKeeperSaves
         {
             bool isxml = IsFileXML(path);
             fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
-            if (isxml)
+            if (!isxml)
             {
-                DebugHelper.Message(string.Format("ZipFileReader StreamReader path:{0}", path));
-                readerStream = new StreamReader(fileStream);
-                XmlReader = new XmlTextReader(readerStream);
+                try
+                {
+                    DebugHelper.Message(string.Format("ZipFileReader GZipStream path:{0}", path));
+                    zipStream = new GZipStream(fileStream, CompressionMode.Decompress);
+                    XmlReader = new XmlTextReader(zipStream);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("ZipFileReader ERROR:" + ex.Message);
+                }
             }
-            else
-            {
-                DebugHelper.Message(string.Format("ZipFileReader GZipStream path:{0}", path));
-                zipStream = new GZipStream(fileStream, CompressionMode.Decompress);
-                XmlReader = new XmlTextReader(zipStream);
-            }
+
+            DebugHelper.Message(string.Format("ZipFileReader StreamReader path:{0}", path));
+            readerStream = new StreamReader(fileStream);
+            XmlReader = new XmlTextReader(readerStream);
         }
 
         public void Dispose()
@@ -46,13 +53,21 @@ namespace Keepercraft.RimKeeperSaves
 
         public static bool IsFileXML(string path)
         {
-            using (StreamReader reader = new StreamReader(path))
+            try
             {
-                char[] buffer = new char[5];
-                reader.Read(buffer, 0, 5);
-                string startOfFile = new string(buffer);
-                return startOfFile.Equals("<?xml");
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    char[] buffer = new char[5];
+                    reader.Read(buffer, 0, 5);
+                    string startOfFile = new string(buffer);
+                    return startOfFile.Equals("<?xml");
+                }
             }
+            catch (Exception ex)
+            {
+                Log.Error("IsFileXML StreamReader ERROR:" + ex.Message);
+            }
+            return true;
         }
     }
 }

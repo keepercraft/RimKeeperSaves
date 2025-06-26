@@ -1,3 +1,10 @@
-/Source/.vs
-/Source/RimKeeperSaves/bin
-/Source/RimKeeperSaves/obj
+# Ignore all files in the build output directory
+bin/
+obj/
+.vs/
+
+*.suo
+*.pdb
+*.log
+*.lib
+*.pdb
