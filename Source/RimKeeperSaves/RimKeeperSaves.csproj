@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
-    <AssemblyName>Keepercraft.RimKeeperSaves</AssemblyName>
 	<AssemblyTitle>RimKeeperSaves</AssemblyTitle>
+	<Authors>Keepercraft</Authors>
+    <AssemblyName>$(Authors).$(AssemblyTitle)</AssemblyName>
 	<AssemblyVersion>$(Version)</AssemblyVersion>
 	<AssemblyProduct>$(AssemblyName)</AssemblyProduct>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -19,15 +19,27 @@
     <IncludeSymbols>True</IncludeSymbols>
 	<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	<Platforms>x64</Platforms>
-	<Configurations>1.6;1.5</Configurations>
+	<Configurations>1.7;1.6;1.5</Configurations>
+	<LangVersion>14</LangVersion>
+	<DebugType>none</DebugType>
+	<DebugSymbols>false</DebugSymbols>
+	<GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 	
-	<PropertyGroup Condition="'$(Platform)'=='x64'">
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<BaseOutputPath />
-		<OutputPath>..\..\$(Configuration)\Assemblies</OutputPath>
-		<ModCopyDir>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(AssemblyTitle)\</ModCopyDir>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<BaseOutputPath />
+	<OutputPath>..\..\$(Configuration)\Assemblies</OutputPath>
+	<ModCopyDir>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\$(AssemblyTitle)\</ModCopyDir>
+  </PropertyGroup>	
+	
+  <PropertyGroup Condition="'$(Configuration)' == '1.5' Or '$(Configuration)' == '1.6'">
+	<TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+	
+  <PropertyGroup Condition="'$(Configuration)' == '1.7'">
+	<TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
 
 	<Target Name="RemoveHarmonyDll" AfterTargets="Build" Condition="'$(Platform)'=='x64'">
 		<Delete Files="$(OutputPath)0Harmony.dll" ContinueOnError="true" />
@@ -94,6 +106,11 @@
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(Configuration)' == '1.7'">
+	<PackageReference Include="Krafs.Rimworld.Ref" Version="1.7.4977-alpha.1" ExcludeAssets="runtime" />
+	<PackageReference Include="Lib.Harmony" Version="3.0.0-rc.2" ExcludeAssets="runtime" />
   </ItemGroup>
 
 </Project>
